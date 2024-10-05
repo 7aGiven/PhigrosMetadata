@@ -1,0 +1,15 @@
+plugins {
+    id 'java'
+}
+
+group = 'given'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.github.zhkl0228:unidbg-dynarmic:0.9.8'
+    implementation 'com.github.zhkl0228:unidbg-android:0.9.8'
+}
