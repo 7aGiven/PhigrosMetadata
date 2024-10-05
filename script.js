@@ -1,3 +1,15 @@
+const cm = new CModule(`
+unsigned int buildString(unsigned char* string, unsigned int offset) {
+	unsigned char xor = offset % 0xFF;
+	do {
+		xor ^= string[offset];
+		string[offset] = xor;
+		offset++;
+	} while (xor);
+	return offset;
+}
+`)
+const buildString = new NativeFunction(cm.buildString, "uint", ["pointer", "uint"])
 function unityPlugin() {
 	const libUnityPlugin = Process.getModuleByName("libUnityPlugin.so")
 	Interceptor.attach(libUnityPlugin.getExportByName("_Z26il2cpp_get_global_metadataPKc"),{
@@ -27,16 +39,6 @@ function unityPlugin() {
 			console.log("dump success", path)
 		}
 	})
-}
-
-function buildString(string, offset) {
-	let xor = offset % 0xFF
-	do {
-		xor ^= string.add(offset).readU8()
-		string.add(offset).writeU8(xor)
-		offset++
-	} while (xor)
-	return offset
 }
 
 Interceptor.attach(Module.getExportByName("libdl.so","dlopen"),{
