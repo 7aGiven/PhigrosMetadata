@@ -44,7 +44,6 @@ public class Main {
         DalvikModule dm = vm.loadLibrary(new File("libUnityPlugin.so"), false);
         dm.callJNI_OnLoad(emulator);
 
-        // Module module = emulator.loadLibrary(new File("libUnityPlugin.so"));
         Module module = dm.getModule();
 		// Module module = emulator.loadLibrary(new File("libUnityPlugin.so"));
 		Symbol symbol = module.findSymbolByName("_Z26il2cpp_get_global_metadataPKc");
