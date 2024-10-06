@@ -1,15 +1,24 @@
 plugins {
-    id 'java'
+	id 'java'
 }
 
 group = 'given'
 version = '1.0'
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
 
 dependencies {
-    implementation 'com.github.zhkl0228:unidbg-dynarmic:0.9.8'
-    implementation 'com.github.zhkl0228:unidbg-android:0.9.8'
+	implementation 'com.github.zhkl0228:unidbg-dynarmic:0.9.8'
+	implementation 'com.github.zhkl0228:unidbg-android:0.9.8'
+}
+
+jar {
+	manifest.attributes "Main-Class": "Main"
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+	from {
+		configurations.runtimeClasspath.collect {it.isDirectory() ? it : zipTree(it) }
+	}
 }
