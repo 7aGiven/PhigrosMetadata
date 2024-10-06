@@ -40,8 +40,8 @@ jobs:
     - name: Build with Gradle 8.9 shadowJar
       run: gradle build
 
-    - name: Upload build output
-      uses: actions/upload-artifact@v4
+    - name: release
+      uses: Shopify/upload-to-release@v1
       with:
         name: PhigrosMetadata
-        path: build/libs/*.jar
+        path: ${{secrets.GITHUB_TOKEN}}
