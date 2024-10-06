@@ -44,4 +44,4 @@ jobs:
       uses: Shopify/upload-to-release@v1
       with:
         name: PhigrosMetadata
-        path: ${{secrets.GITHUB_TOKEN}}
+        path: ${{secrets.action}}
