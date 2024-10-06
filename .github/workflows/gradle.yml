@@ -8,8 +8,8 @@
 name: Build PhigrosMetadata
 
 on:
-  // schedule:
-  //   - cron: '5 9 * * *'  # Fires every day at 5:05 PM UTC
+  # schedule:
+  #   - cron: '5 9 * * *'  # Fires every day at 5:05 PM UTC
   push:
     branches:
       - main
@@ -44,4 +44,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: PhigrosMetadata
-        path: build\libs
+        path: build/libs/(.*).jar
