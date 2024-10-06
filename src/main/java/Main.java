@@ -12,12 +12,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
-		if (args.length == 0) {
+		if (args.length != 1) {
 			System.out.println("help: java -jar PhigrosMetadata.jar <apkPath>");
 			return;
 		}
@@ -27,12 +28,12 @@ public class Main {
 		}
 		AndroidEmulator emulator = AndroidEmulatorBuilder
 				.for32Bit()
-				.setProcessName("com.PigeonGames.Phigros")
-				.setRootDir(new File("."))
 				.addBackendFactory(new DynarmicFactory(false))
 				.build();
 		Memory memory = emulator.getMemory();
 		memory.setLibraryResolver(new AndroidResolver(23));
+
+		emulator.getSyscallHandler().addIOResolver(new IO());
 
 		Module module = emulator.loadLibrary(new File("libUnityPlugin.so"));
 		Symbol symbol = module.findSymbolByName("_Z26il2cpp_get_global_metadataPKc");
