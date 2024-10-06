@@ -1,13 +1,3 @@
-import com.github.unidbg.AndroidEmulator;
-import com.github.unidbg.Module;
-import com.github.unidbg.Symbol;
-import com.github.unidbg.arm.backend.DynarmicFactory;
-import com.github.unidbg.linux.android.AndroidEmulatorBuilder;
-import com.github.unidbg.linux.android.AndroidResolver;
-import com.github.unidbg.memory.Memory;
-import com.github.unidbg.memory.MemoryBlock;
-import com.github.unidbg.pointer.UnidbgPointer;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,6 +5,19 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
+import com.github.unidbg.AndroidEmulator;
+import com.github.unidbg.Module;
+import com.github.unidbg.Symbol;
+import com.github.unidbg.arm.backend.DynarmicFactory;
+import com.github.unidbg.linux.android.AndroidEmulatorBuilder;
+import com.github.unidbg.linux.android.AndroidResolver;
+import com.github.unidbg.linux.android.dvm.DalvikModule;
+import com.github.unidbg.linux.android.dvm.VM;
+import com.github.unidbg.memory.Memory;
+import com.github.unidbg.memory.MemoryBlock;
+import com.github.unidbg.pointer.UnidbgPointer;
+import com.github.unidbg.virtualmodule.android.AndroidModule;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
@@ -34,8 +37,16 @@ public class Main {
 		memory.setLibraryResolver(new AndroidResolver(23));
 
 		emulator.getSyscallHandler().addIOResolver(new IO());
+		
+		VM vm = emulator.createDalvikVM();
+		new AndroidModule(emulator, vm).register(memory);
 
-		Module module = emulator.loadLibrary(new File("libUnityPlugin.so"));
+        DalvikModule dm = vm.loadLibrary(new File("libUnityPlugin.so"), false);
+        dm.callJNI_OnLoad(emulator);
+
+        // Module module = emulator.loadLibrary(new File("libUnityPlugin.so"));
+        Module module = dm.getModule();
+		// Module module = emulator.loadLibrary(new File("libUnityPlugin.so"));
 		Symbol symbol = module.findSymbolByName("_Z26il2cpp_get_global_metadataPKc");
 
 		String path = "/game.dat";

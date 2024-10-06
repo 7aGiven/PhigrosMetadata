@@ -1,1 +1,4 @@
 /global-metadata.dat
+/build
+/.gradle
+/gradle.properties
