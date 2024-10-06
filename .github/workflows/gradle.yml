@@ -8,8 +8,8 @@
 name: Build PhigrosMetadata
 
 on:
-  schedule:
-    - cron: '5 9 * * *'  # Fires every day at 5:05 PM UTC
+  // schedule:
+  //   - cron: '5 9 * * *'  # Fires every day at 5:05 PM UTC
   push:
     branches:
       - main
@@ -38,10 +38,10 @@ jobs:
       uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
 
     - name: Build with Gradle 8.9 shadowJar
-      run: gradle shadowJar
+      run: gradle build
 
     - name: Upload build output
       uses: actions/upload-artifact@v4
       with:
         name: PhigrosMetadata
-        path: bin
+        path: build\libs
