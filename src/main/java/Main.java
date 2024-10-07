@@ -25,6 +25,7 @@ public class Main {
 		try (ZipFile zipFile = new ZipFile(args[0])) {
 			readEntry(zipFile, "lib/armeabi-v7a/libUnityPlugin.so", "libUnityPlugin.so");
 			readEntry(zipFile, "assets/bin/Data/Managed/Metadata/game.dat", "game.dat");
+			readEntry(zipFile, "lib/armeabi-v7a/libil2cpp.so", "libil2cpp.so");
 		}
 		AndroidEmulator emulator = AndroidEmulatorBuilder
 				.for32Bit()
