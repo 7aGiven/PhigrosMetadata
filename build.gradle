@@ -14,6 +14,8 @@ dependencies {
 	implementation 'com.github.zhkl0228:unidbg-android:0.9.8'
 }
 
+java.sourceCompatibility = JavaVersion.VERSION_11
+
 jar {
 	manifest.attributes "Main-Class": "Main"
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
