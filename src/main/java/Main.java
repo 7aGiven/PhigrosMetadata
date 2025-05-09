@@ -23,12 +23,12 @@ public class Main {
 			return;
 		}
 		try (ZipFile zipFile = new ZipFile(args[0])) {
-			readEntry(zipFile, "lib/armeabi-v7a/libUnityPlugin.so", "libUnityPlugin.so");
+			readEntry(zipFile, "lib/arm64-v8a/libUnityPlugin.so", "libUnityPlugin.so");
 			readEntry(zipFile, "assets/bin/Data/Managed/Metadata/game.dat", "game.dat");
-			readEntry(zipFile, "lib/armeabi-v7a/libil2cpp.so", "libil2cpp.so");
+			readEntry(zipFile, "lib/arm64-v8a/libil2cpp.so", "libil2cpp.so");
 		}
 		AndroidEmulator emulator = AndroidEmulatorBuilder
-				.for32Bit()
+				.for64Bit()
 				.addBackendFactory(new DynarmicFactory(false))
 				.build();
 		Memory memory = emulator.getMemory();
